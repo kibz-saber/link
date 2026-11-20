@@ -56,8 +56,14 @@ void printList(Node *head)
  */
 int getLength(Node *head)
 {
-    // TODO
-    return 0;
+    long long len=0;
+    Node * current= head;
+    while(current != nullptr)
+    {
+        current = current->next;
+        len++;
+    }
+    return len;
 }
 
 /**
@@ -68,7 +74,9 @@ int getLength(Node *head)
  */
 void insertAtFront(Node *&head, int value)
 {
-    // TODO
+    Node * newn= new Node(value);
+    (*newn).next = head;
+    head= newn;
 }
 
 /**
@@ -79,7 +87,24 @@ void insertAtFront(Node *&head, int value)
  */
 void insertAtEnd(Node *&head, int value)
 {
-    // TODO
+    
+    if(head!=nullptr){
+        Node* cur=head;
+        while(cur->next!=nullptr){
+        cur=cur->next;
+    }
+    Node * newn= new Node(value);
+    (*cur).next=newn;
+    (*newn).next=nullptr;
+
+    }
+    else{
+        Node * newn= new Node(value);
+        head= newn;
+
+    }
+    
+    
 }
 /**
  * Runs the linked-list test cases.
@@ -96,7 +121,24 @@ void insertAtEnd(Node *&head, int value)
  */
 void insertAtPosition(Node *&head, int value, int position)
 {
-    // TODO
+    int len=0;
+    Node * cur= head;
+    Node * newn = new Node(value);
+    if (position==0){
+        (*newn).next=cur;
+        head=newn;
+    }
+    else{
+    while(len!=position-1){
+        len++;
+        cur=cur->next;
+    }
+    
+    Node * t=cur->next;
+    (*cur).next=newn;
+    (*newn).next =t;
+
+}
 }
 
 /**
@@ -107,7 +149,13 @@ void insertAtPosition(Node *&head, int value, int position)
  */
 bool search(Node *head, int value)
 {
-    // TODO
+    Node * cur =head;
+    while (cur!=nullptr){
+        if((*cur).data == value){
+            return true;
+        }
+        cur=(*cur).next;
+    }
     return false;
 }
 
@@ -119,9 +167,11 @@ bool search(Node *head, int value)
  * @return void
  */
 void deleteFront(Node *&head)
-{
-    // TODO
-}
+{if (head!=nullptr){
+    Node * gg=head;
+    head=(*gg).next;
+    delete gg ;
+}}
 
 /**
  * Removes the last node, if the list is not empty.
@@ -129,9 +179,24 @@ void deleteFront(Node *&head)
  * @return void
  */
 void deleteEnd(Node *&head)
-{
-    // TODO
-}
+{if(head!=nullptr){
+    if ((*head).next!=nullptr){
+        Node *curr=head;
+        while(curr->next->next!=nullptr){
+            curr= curr->next;
+        }
+        Node * gg = curr->next;
+        (*curr).next=nullptr;
+        delete gg;
+    }
+    else{
+         Node * gg=head;
+    head=(*gg).next;
+    delete gg ;
+        
+    }
+    
+}}
 
 /**
  * Removes the first node whose data equals value.
@@ -141,7 +206,29 @@ void deleteEnd(Node *&head)
  */
 bool deleteValue(Node *&head, int value)
 {
-    // TODO
+    if (head == nullptr){
+        return false;
+    }
+        
+    if (head->data == value) {
+        Node* gg = head;
+        head = head->next;
+        delete gg;
+        return true;
+    }
+
+    Node* cur = head;
+
+    while (cur->next != nullptr) {
+        if (cur->next->data == value) {
+            Node* gg = cur->next;
+            cur->next = cur->next->next;
+            delete gg;
+            return true;
+        }
+        cur = cur->next;
+    }
+
     return false;
 }
 
@@ -154,64 +241,154 @@ bool deleteValue(Node *&head, int value)
  */
 void removeDuplicates(Node *head)
 {
-    // TODO
-}
+    if(head!=nullptr){
+    
+    Node * it =head;
+while(it->next!=nullptr){
+    int val = it-> data;
+    Node* cur = it;
+    while (cur->next != nullptr) {
+        if (cur->next->data == val) {
+            Node* gg = cur->next;
+            cur->next = cur->next->next;
+            delete gg;
+        }
+        cur = cur->next;
+    }
+    it=it->next;
+}}}
 
 /**
  * Reverses the list in place without creating new nodes.
  * @param head Reference to the pointer to the first node.
  * @return void
  */
-void reverseList(Node *&head)
-{
-    // TODO
-}
+	void reverseList(Node *&head)
+	{
+		Node * nah =nullptr;
+		Node * c = head;
+		bool r=true;
+		Node * p =nullptr;
+		Node * origin =head;
 
+
+
+		while (r==true) {
+			while(c->next!=nah) {
+                
 /**
- * Finds the middle value, using the second middle for an even-length list.
- * @param head Pointer to the first node.
- * @return int Middle node's value, or -1 if the list is empty.
- */
-int findMiddle(Node *head)
-{
-    // TODO
-    return -1;
-}
 
-/**
- * Sums the values in the list.
- * @param head Pointer to the first node.
- * @return int Sum of the values, or 0 if the list is empty.
- */
-int sumList(Node *head)
-{
-    // TODO
-    return 0;
-}
+Node*y=c->next;
+Node*z=c->next->next;
+c->next=y->next;
+y->next=z->next;
+z->next=y;
 
-/**
- * Deletes every node and sets head to nullptr.
- * @param head Reference to the pointer to the first node.
- * @return void
- */
-void clearList(Node *&head)
-{
-    // TODO
-}
+	 */
+		//		c=c->next;
+			}
+			nah=c;
 
-/** BONUS (optional). */
 
-/**
- * Inserts value into an ascending list while preserving its sorted order.
- * @param head Reference to the pointer to the first node.
- * @param value Value to insert.
- * @return void
- */
-void insertSorted(Node *&head, int value)
-{
-    // TODO (bonus)
-}
 
+		}
+	}
+
+	/**
+	 * Finds the middle value, using the second middle for an even-length list.
+	 * @param head Pointer to the first n{
+	 * ode.
+	 * @return int Middle node's value, or -1 if the list is empty.
+	 */
+	int findMiddle(Node *head)
+{	if(head!=nullptr) {
+			int len=getLength(head);
+			int t;
+			Node * c =head;
+			if(len%2!=0) {
+				t=(len+1)/2 -1;
+			} else {
+				t=len/2;
+			}
+			int r=0;
+			while(r!=t) {
+				c=c->next;
+				r++;
+			}
+			return c->data;
+		}
+		else {
+			return -1;
+		}
+	}
+
+	/**
+	 * Sums the values in the list.
+	 * @param head Pointer to the first node.
+	 * @return int Sum of the values, or 0 if the list is empty.
+	 */
+	int sumList(Node *head)
+	{	int sum=0;
+
+		Node * c= head;
+		while(c != nullptr) {
+			sum+=c->data;
+			c=c->next;
+		}
+		return sum;
+	}
+
+	/**
+	 * Deletes every node and sets head to nullptr.
+	 * @param head Reference to the pointer to the first node.
+	 * @return void
+	 */
+	void clearList(Node *&head)
+{	if(head!=nullptr) {
+			Node * c = head;
+			while(c->next!=nullptr) {
+				Node *gg =c->next;
+				c->next=c->next->next;
+				delete gg;
+			}
+			head=nullptr;
+			delete c;
+		}
+	}
+
+	/** BONUS (optional). */
+
+	/**
+	 * Inserts value into an ascending list while preserving its sorted order.
+	 * @param head Reference to the pointer to the first node.
+	 * @param value Value to insert.
+	 * @return void
+	 */
+	void insertSorted(Node *&head, int value)
+	{	Node * newn =new Node(value);
+		if(head==nullptr) {
+			newn->next = head;
+			head=newn;
+		}
+		else {
+			Node *c =head;
+			if(c->data>=value) {
+				newn->next = head;
+				head=newn;
+				return;
+			}
+			while(c->next !=nullptr) {
+			    if(c->next->data>=value){
+			        break;
+			    }
+			    else{
+			        c=c->next;
+			    }
+			}
+			newn->next=c->next;
+			c->next=newn;
+		}
+	}
 /** TESTS: do not modify below this line. */
 int main()
 {
