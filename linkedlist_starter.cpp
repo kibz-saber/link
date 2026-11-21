@@ -124,9 +124,15 @@ void insertAtPosition(Node *&head, int value, int position)
     int len=0;
     Node * cur= head;
     Node * newn = new Node(value);
-    if (position==0){
+    if (position<=0){
         (*newn).next=cur;
         head=newn;
+        return;
+    }
+    else if(position>=getLength(head)){
+        delete newn;
+        insertAtEnd(head, value);
+        return;
     }
     else{
     while(len!=position-1){
@@ -252,8 +258,10 @@ while(it->next!=nullptr){
             Node* gg = cur->next;
             cur->next = cur->next->next;
             delete gg;
-        }
-        cur = cur->next;
+                                    }
+        else {
+            cur = cur->next;
+            }
     }
     it=it->next;
 }}}
@@ -264,36 +272,26 @@ while(it->next!=nullptr){
  * @return void
  */
 	void reverseList(Node *&head)
-	{
-		Node * nah =nullptr;
-		Node * c = head;
-		bool r=true;
-		Node * p =nullptr;
-		Node * origin =head;
+	{ if(head ==nullptr || head->next ==nullptr){ return;}
+		Node * p=nullptr;
+        Node * prev=head;
+        Node * c= head->next;
+        while(c!=nullptr){
+            prev->next =p;
+            p=prev;
+            prev=c;
+            c=c->next;
+        }
+        prev->next=p;
+        head=prev;
 
 
+			
 
-		while (r==true) {
-			while(c->next!=nah) {
-                
-/**
-
-Node*y=c->next;
-Node*z=c->next->next;
-c->next=y->next;
-y->next=z->next;
-z->next=y;
-
-	 */
-		//		c=c->next;
-			}
-			nah=c;
-
-
+    
 
 		}
-	}
-
+	
 	/**
 	 * Finds the middle value, using the second middle for an even-length list.
 	 * @param head Pointer to the first n{
